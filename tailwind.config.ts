@@ -1,6 +1,7 @@
 import type {Config} from 'tailwindcss';
 
 const { fontFamily } = require("tailwindcss/defaultTheme")
+const plugin = require('tailwindcss/plugin')
 
 export default {
   darkMode: ['class'],
@@ -93,5 +94,17 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    plugin(function({ addUtilities }: { addUtilities: any }) {
+      addUtilities({
+        '.transform-style-preserve-3d': {
+          'transform-style': 'preserve-3d',
+        },
+        '.backface-hidden': {
+          'backface-visibility': 'hidden',
+        },
+      })
+    }),
+  ],
 } satisfies Config;
