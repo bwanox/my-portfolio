@@ -17,7 +17,11 @@ interface ProjectsSectionProps {
 }
 
 const ProjectCard = ({ project, isHighlighted }: { project: Project; isHighlighted: boolean }) => (
-  <Card className={cn("overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-2 flex flex-col h-full", isHighlighted ? 'border-primary shadow-xl shadow-primary/20' : '')}>
+  <Card className={cn(
+      "overflow-hidden transition-all duration-300 flex flex-col h-full bg-card/50 backdrop-blur-sm", 
+      "hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 hover:border-primary/80",
+      isHighlighted ? 'border-2 border-primary shadow-xl shadow-primary/20' : 'border-border'
+    )}>
     <CardHeader className="p-0">
       <div className="relative aspect-video">
         <Image

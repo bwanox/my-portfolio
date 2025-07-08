@@ -14,6 +14,7 @@ import SkillsSection from '@/components/sections/skills';
 import AchievementsSection from '@/components/sections/achievements';
 import ContactSection from '@/components/sections/contact';
 import { Award, Code, Crown, Bot } from 'lucide-react';
+import { AnimatedWrapper } from '@/components/animated-wrapper';
 
 const ALL_PROJECTS: Project[] = [
   {
@@ -85,15 +86,23 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <HeroSection />
-        <AboutSection />
-        <PersonalizationTool 
-          onPersonalizationUpdate={handlePersonalizationUpdate}
-          onLoadingStateChange={handleLoadingStateChange}
-        />
-        <ProjectsSection projects={ALL_PROJECTS} highlightedProjects={highlightedContent?.highlightedProjects} isLoading={isPersonalizing} />
+        <AnimatedWrapper>
+          <AboutSection />
+        </AnimatedWrapper>
+        <AnimatedWrapper>
+          <PersonalizationTool 
+            onPersonalizationUpdate={handlePersonalizationUpdate}
+            onLoadingStateChange={handleLoadingStateChange}
+          />
+        </AnimatedWrapper>
+        <AnimatedWrapper>
+          <ProjectsSection projects={ALL_PROJECTS} highlightedProjects={highlightedContent?.highlightedProjects} isLoading={isPersonalizing} />
+        </AnimatedWrapper>
         <SkillsSection skills={ALL_SKILLS} highlightedSkills={highlightedContent?.highlightedSkills} isLoading={isPersonalizing} />
         <AchievementsSection achievements={ACHIEVEMENTS} />
-        <ContactSection />
+        <AnimatedWrapper>
+          <ContactSection />
+        </AnimatedWrapper>
       </main>
       <Footer />
     </div>

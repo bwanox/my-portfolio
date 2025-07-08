@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 
@@ -8,10 +10,20 @@ export default function HeroSection() {
             aboutSection.scrollIntoView({ behavior: 'smooth' });
         }
     };
+    
+    const scrollToContact = () => {
+        const contactSection = document.querySelector('#contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     return (
-        <section className="relative h-[calc(100vh-3.5rem)] w-full">
+        <section className="relative h-[calc(100vh-3.5rem)] w-full overflow-hidden">
             <div className="absolute inset-0 w-full h-full animated-gradient" />
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary animated-orb" style={{ animationDelay: '0s' }} />
+            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-accent animated-orb" style={{ animationDelay: '5s' }} />
+
             <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
                 <div className="max-w-4xl mx-auto">
                     <h1 className="text-5xl font-bold font-headline tracking-tighter sm:text-7xl md:text-8xl lg:text-9xl bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
@@ -30,7 +42,7 @@ export default function HeroSection() {
                             Explore My Work
                             <ArrowDown className="ml-2 h-5 w-5" />
                         </Button>
-                        <Button size="lg" variant="outline">
+                        <Button size="lg" variant="outline" onClick={scrollToContact}>
                             Get In Touch
                         </Button>
                     </div>

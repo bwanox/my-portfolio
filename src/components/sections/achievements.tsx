@@ -1,4 +1,7 @@
+'use client';
+
 import type { Achievement } from '@/lib/types';
+import { motion } from 'framer-motion';
 
 export default function AchievementsSection({ achievements }: { achievements: Achievement[] }) {
   return (
@@ -18,8 +21,19 @@ export default function AchievementsSection({ achievements }: { achievements: Ac
             <div className="space-y-12">
               {achievements.map((achievement, index) => {
                 const Icon = achievement.icon;
+                const itemVariants = {
+                  hidden: { opacity: 0, x: -50 },
+                  visible: { opacity: 1, x: 0, transition: { delay: index * 0.2, ease: 'easeOut' } }
+                };
                 return (
-                  <div key={index} className="relative flex items-start">
+                  <motion.div 
+                    key={index} 
+                    className="relative flex items-start"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.5 }}
+                    variants={itemVariants}
+                  >
                     <div className="flex-shrink-0">
                       <div className="absolute -left-1 top-1.5 h-12 w-12 rounded-full bg-background flex items-center justify-center">
                         <div className="h-8 w-8 rounded-full bg-accent/20 flex items-center justify-center">
@@ -35,7 +49,7 @@ export default function AchievementsSection({ achievements }: { achievements: Ac
                             </p>
                         </div>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>

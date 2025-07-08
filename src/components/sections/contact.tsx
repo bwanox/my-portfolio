@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { Mail, Send, Github, Linkedin, MessageSquare } from 'lucide-react';
+import { Mail, Send, Github, Linkedin } from 'lucide-react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -67,7 +67,7 @@ export default function ContactSection() {
                              </a>
                          </div>
                     </div>
-                    <Card className="p-8 border-accent/20 bg-card/50">
+                    <Card className="p-8 border-accent/20 bg-card/50 backdrop-blur-sm">
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                                 <FormField
@@ -77,7 +77,7 @@ export default function ContactSection() {
                                         <FormItem>
                                             <FormLabel>Your Name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="John Doe" {...field} />
+                                                <Input placeholder="John Doe" {...field} className="transition-all duration-300 focus:ring-2 focus:ring-accent/50 focus:border-accent" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -90,7 +90,7 @@ export default function ContactSection() {
                                         <FormItem>
                                             <FormLabel>Your Email</FormLabel>
                                             <FormControl>
-                                                <Input type="email" placeholder="john.doe@example.com" {...field} />
+                                                <Input type="email" placeholder="john.doe@example.com" {...field} className="transition-all duration-300 focus:ring-2 focus:ring-accent/50 focus:border-accent" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -103,7 +103,7 @@ export default function ContactSection() {
                                         <FormItem>
                                             <FormLabel>Your Message</FormLabel>
                                             <FormControl>
-                                                <Textarea placeholder="Let's talk about..." {...field} />
+                                                <Textarea placeholder="Let's talk about..." {...field} className="transition-all duration-300 focus:ring-2 focus:ring-accent/50 focus:border-accent" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
