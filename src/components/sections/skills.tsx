@@ -1,103 +1,115 @@
-'use client';
+"use client";
 
-import type { CategorizedSkills } from '@/lib/types';
-import type { PersonalizePortfolioOutput } from '@/ai/flows/personalize-portfolio';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils';
-import { BrainCircuit, Cog, Presentation, Server } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
-import { motion } from 'framer-motion';
+import * as React from "react";
+import { motion } from "framer-motion";
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
-interface SkillsSectionProps {
-  skills: CategorizedSkills[];
-  highlightedSkills: PersonalizePortfolioOutput['highlightedSkills'] | undefined;
-  isLoading: boolean;
-}
-
-const categoryIcons: { [key in CategorizedSkills['category']]: LucideIcon } = {
-    'Frontend': Cog,
-    'Backend': Server,
-    'AI/ML': BrainCircuit,
-    'Project Management': Presentation
+const allSkills = {
+  frontend: [
+    { name: 'React & Next.js', level: 90 },
+    { name: 'JavaScript & TypeScript', level: 95 },
+    { name: 'HTML5 & CSS3', level: 98 },
+    { name: 'Tailwind CSS', level: 95 },
+    { name: 'Three.js & WebGL', level: 70 },
+  ],
+  backend: [
+    { name: 'Node.js & Express', level: 88 },
+    { name: 'Python & Django', level: 75 },
+    { name: 'SQL (PostgreSQL, MySQL)', level: 80 },
+    { name: 'NoSQL (MongoDB, Firebase)', level: 78 },
+    { name: 'Docker & Kubernetes', level: 70 },
+  ],
+  design: [
+    { name: 'Figma', level: 92 },
+    { name: 'UI/UX Principles', level: 85 },
+    { name: 'User Research', level: 75 },
+    { name: 'Prototyping & Wireframing', level: 90 },
+    { name: 'Adobe Creative Suite', level: 80 },
+  ],
+  other: [
+    { name: 'Agile & Scrum', level: 95 },
+    { name: 'Project Management Tools (Jira)', level: 90 },
+    { name: 'CI/CD & DevOps', level: 75 },
+    { name: 'Generative AI APIs', level: 80 },
+    { name: 'Git & Version Control', level: 98 },
+  ]
 };
 
-const SkillSkeleton = () => (
-    <Card className="bg-card/50">
-        <CardHeader className="flex flex-row items-center gap-4 pb-4">
-            <Skeleton className="h-8 w-8 rounded-full" />
-            <Skeleton className="h-6 w-1/2" />
-        </CardHeader>
-        <CardContent>
-            <div className="flex flex-wrap gap-2">
-                {Array.from({length: 8}).map((_, i) => (
-                    <Skeleton key={i} className="h-7 w-20 rounded-full" />
-                ))}
-            </div>
-        </CardContent>
-    </Card>
-);
+type SkillCategory = keyof typeof allSkills;
 
-export default function SkillsSection({ skills, highlightedSkills, isLoading }: SkillsSectionProps) {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
+export function Skills() {
+  const [activeCategory, setActiveCategory] = React.useState<SkillCategory>("frontend");
+  const skills = allSkills[activeCategory];
+
+  const skillVariants = {
+    hidden: { opacity: 0, x: -30 },
+    visible: (i: number) => ({
       opacity: 1,
-      transition: { staggerChildren: 0.1, ease: 'easeOut' }
-    }
+      x: 0,
+      transition: {
+        delay: i * 0.1,
+        type: "spring",
+        stiffness: 100,
+      },
+    }),
   };
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { ease: 'easeOut' } }
-  };
-  
   return (
-    <section id="skills" className="py-24 sm:py-32 bg-background/50">
-      <div className="container mx-auto px-4">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl text-primary">
-            My Technical Toolkit
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            From front-end frameworks to machine learning models, here's a look at the technologies I work with.
-          </p>
-        </div>
+    <section id="skills" className="py-24 sm:py-32 bg-grid">
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
-            className="mt-16 grid gap-8 md:grid-cols-2"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
         >
-          {isLoading ?
-           Array.from({length: 4}).map((_, i) => <SkillSkeleton key={i} />) :
-           skills.map(category => {
-            const Icon = categoryIcons[category.category];
-            return (
-              <motion.div key={category.category} variants={itemVariants}>
-                <Card className="bg-card/50 backdrop-blur-sm h-full border-border/80">
-                  <CardHeader className="flex flex-row items-center gap-4 pb-4">
-                      <Icon className="h-8 w-8 text-accent" />
-                      <CardTitle className="font-headline text-2xl">{category.category}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {category.skills.map(skill => (
-                        <Badge
-                          key={skill}
-                          className={cn("px-4 py-2 text-sm transition-all duration-300", highlightedSkills?.includes(skill) ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' : 'bg-secondary text-secondary-foreground')}
-                        >
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )
-          })}
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-4 text-glow">
+            Technical Proficiency
+          </h2>
+          <div className="w-24 h-1 bg-accent mx-auto mb-12 rounded-full"></div>
+        </motion.div>
+
+        <motion.div 
+          className="max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <Card className="bg-card/30 backdrop-blur-sm border border-white/10 p-4 md:p-8 shadow-2xl">
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
+              {Object.keys(allSkills).map((category) => (
+                <Button
+                  key={category}
+                  variant={activeCategory === category ? "default" : "outline"}
+                  onClick={() => setActiveCategory(category as SkillCategory)}
+                  className="capitalize"
+                >
+                  {category}
+                </Button>
+              ))}
+            </div>
+
+            <div className="space-y-6">
+              {skills.map((skill, index) => (
+                <motion.div
+                  key={`${activeCategory}-${skill.name}`}
+                  custom={index}
+                  variants={skillVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-white/90 font-medium">{skill.name}</span>
+                    <span className="text-accent font-mono text-sm">{skill.level}%</span>
+                  </div>
+                  <Progress value={skill.level} className="h-2 [&>div]:bg-gradient-to-r [&>div]:from-primary [&>div]:to-accent" />
+                </motion.div>
+              ))}
+            </div>
+          </Card>
         </motion.div>
       </div>
     </section>

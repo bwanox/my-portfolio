@@ -1,4 +1,4 @@
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/personalize-portfolio.ts';
+import '@/ai/flows/space-droid-ai-assistant.ts';

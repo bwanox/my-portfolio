@@ -1,23 +1,10 @@
 import type {Metadata} from 'next';
-import { Inter, Space_Grotesk } from 'next/font/google';
 import './globals.css';
-import { cn } from '@/lib/utils';
-import { Toaster } from '@/components/ui/toaster';
-import { Analytics } from '@vercel/analytics/react';
-
-const fontBody = Inter({ 
-  subsets: ['latin'],
-  variable: '--font-body',
-});
-
-const fontHeadline = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-headline',
-});
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'Sahili Digital | Full-Stack Developer & AI Engineer',
-  description: 'The personal portfolio of Bilal Sahili, an innovative full-stack developer, AI engineer, and project manager.',
+  title: 'Cosmic Folio',
+  description: 'An interactive portfolio journey through a universe of skills and projects.',
 };
 
 export default function RootLayout({
@@ -27,14 +14,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={cn(
-        "font-body antialiased",
-        fontBody.variable,
-        fontHeadline.variable
-      )}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="font-body antialiased">
         {children}
         <Toaster />
-        <Analytics />
       </body>
     </html>
   );

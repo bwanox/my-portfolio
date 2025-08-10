@@ -1,147 +1,134 @@
-'use client';
+"use client";
 
-import type { Project } from '@/lib/types';
-import type { PersonalizePortfolioOutput } from '@/ai/flows/personalize-portfolio';
-import Image from 'next/image';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Github, ExternalLink } from 'lucide-react';
-import { Skeleton } from '@/components/ui/skeleton';
-import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
+import Image from "next/image";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 
-interface ProjectsSectionProps {
-  projects: Project[];
-  highlightedProjects: PersonalizePortfolioOutput['highlightedProjects'] | undefined;
-  isLoading: boolean;
-}
+const projects = [
+  {
+    title: "Project Alpha Centauri",
+    description: "A full-stack web application for tracking interstellar shipments.",
+    longDescription: "This project involved creating a comprehensive logistics platform from scratch. Key features include real-time tracking, inventory management, and a user-friendly dashboard for analytics. The backend is built with Node.js and PostgreSQL, ensuring robustness and scalability, while the frontend uses React for a dynamic and responsive user experience.",
+    image: "https://placehold.co/600x400.png",
+    aiHint: "dashboard analytics",
+    tags: ["React", "Node.js", "PostgreSQL", "Tailwind"],
+    liveUrl: "#",
+  },
+  {
+    title: "Nebula Navigator",
+    description: "An interactive 3D map of the known galaxy using Three.js.",
+    longDescription: "Nebula Navigator is a passion project to visualize stellar data in an interactive 3D environment. Using Three.js and GLSL shaders, it renders thousands of stars and celestial objects. The application fetches data from public astronomy APIs and provides a unique way to explore the cosmos.",
+    image: "https://placehold.co/600x400.png",
+    aiHint: "galaxy map",
+    tags: ["Three.js", "Next.js", "GLSL", "APIs"],
+    liveUrl: "#",
+  },
+  {
+    title: "Cyber-Deck UI Kit",
+    description: "A futuristic component library for sci-fi themed interfaces.",
+    longDescription: "Designed for developers and designers, this UI kit provides a set of reusable React components with a distinct cyberpunk and sci-fi aesthetic. It's built with accessibility in mind and is highly customizable using Tailwind CSS. The design process was done in Figma, focusing on a consistent and immersive visual language.",
+    image: "https://placehold.co/600x400.png",
+    aiHint: "ui components",
+    tags: ["Figma", "React", "Tailwind", "Storybook"],
+    liveUrl: "#",
+  },
+  {
+    title: "AI Droid Companion",
+    description: "A conversational AI assistant integrated into a web platform.",
+    longDescription: "This project showcases the integration of large language models to create a helpful and engaging chatbot. The AI Droid can answer user questions, provide information, and guide users through the website. The backend is powered by Genkit, running on a serverless architecture for efficiency and scalability.",
+    image: "https://placehold.co/600x400.png",
+    aiHint: "chatbot interface",
+    tags: ["GenAI", "Next.js", "Genkit", "Vercel"],
+    liveUrl: "#",
+  },
+];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.95 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: 'easeOut' } }
-};
-
-const ProjectCard = ({ project, isHighlighted }: { project: Project; isHighlighted: boolean }) => (
-  <motion.div variants={cardVariants} className="[perspective:1000px] group h-full">
-    <Card className={cn(
-      "overflow-hidden transition-all duration-500 flex flex-col h-full bg-card/50 backdrop-blur-sm relative transform-style-preserve-3d group-hover:shadow-2xl group-hover:shadow-primary/20",
-      "group-hover:-translate-y-2 group-hover:rotate-x-2 group-hover:-rotate-y-3",
-      isHighlighted ? 'border-2 border-primary shadow-xl shadow-primary/20' : 'border-border'
-    )}>
-      <CardHeader className="p-0 relative">
-        <div className="relative aspect-video overflow-hidden">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            data-ai-hint={project.aiHint}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-        </div>
-        <div className="p-6 absolute bottom-0 w-full transition-transform duration-500 [transform:translateZ(40px)]">
-          <CardTitle className="font-headline text-xl text-white [text-shadow:0_2px_4px_rgba(0,0,0,0.7)]">
-            {project.title}
-          </CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent className="flex-grow p-6">
-        <p className="text-muted-foreground">{project.description}</p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {project.techStack.split(', ').map(tech => (
-            <Badge key={tech} variant="secondary">{tech}</Badge>
-          ))}
-        </div>
-      </CardContent>
-      <CardFooter className="p-6 pt-0 mt-auto">
-        <div className="flex w-full justify-end gap-2">
-          {project.githubUrl && (
-            <Button variant="outline" size="icon" asChild>
-              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                <Github className="h-4 w-4" />
-                <span className="sr-only">GitHub</span>
-              </a>
-            </Button>
-          )}
-          {project.liveUrl && (
-            <Button asChild>
-              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                Live Demo <ExternalLink className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
-          )}
-        </div>
-      </CardFooter>
-    </Card>
-  </motion.div>
-);
-
-const ProjectSkeleton = () => (
-    <div className="flex flex-col space-y-0 bg-card/50 rounded-lg overflow-hidden border border-border h-full">
-        <Skeleton className="aspect-video w-full" />
-        <div className="p-6 space-y-4 flex-grow">
-            <div className="space-y-2">
-                <Skeleton className="h-5 w-3/4" />
-            </div>
-            <div className="space-y-2">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-1/2" />
-            </div>
-             <div className="flex flex-wrap gap-2 pt-2">
-                <Skeleton className="h-6 w-16 rounded-full" />
-                <Skeleton className="h-6 w-20 rounded-full" />
-                <Skeleton className="h-6 w-12 rounded-full" />
-            </div>
-        </div>
-        <div className="p-6 pt-2 flex justify-end gap-2">
-            <Skeleton className="h-10 w-10 rounded-md" />
-            <Skeleton className="h-10 w-28 rounded-md" />
-        </div>
-    </div>
-)
-
-export default function ProjectsSection({ projects, highlightedProjects, isLoading }: ProjectsSectionProps) {
-  const highlightedTitles = highlightedProjects?.map(p => p.title) || [];
-  
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2, delayChildren: 0.1 }
-    }
-  };
-
+export function Projects() {
   return (
-    <section id="projects" className="py-24 sm:py-32">
-      <div className="container mx-auto px-4">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold font-headline tracking-tighter sm:text-4xl md:text-5xl text-primary">
-            Projects Showcase
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-            Here are some of the projects I'm most proud of. Each one represents a unique challenge and a valuable learning experience.
-          </p>
-        </div>
-        <motion.div 
-            className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-2"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
+    <section id="projects" className="py-24 sm:py-32 bg-aurora">
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
         >
-            {isLoading ? 
-                Array.from({ length: 4 }).map((_, i) => <ProjectSkeleton key={i} />) : 
-                projects.map(project => (
-                    <ProjectCard
-                        key={project.title}
-                        project={project}
-                        isHighlighted={highlightedTitles.includes(project.title)}
-                    />
-                ))
-            }
+          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-4 text-glow">
+            Project Universe
+          </h2>
+          <div className="w-24 h-1 bg-accent mx-auto mb-12 rounded-full"></div>
         </motion.div>
+        
+        <Carousel opts={{ align: "start", loop: true }} className="w-full max-w-6xl mx-auto">
+          <CarouselContent>
+            {projects.map((project, index) => (
+              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                <div className="p-2 h-full">
+                  <motion.div
+                    className="h-full"
+                    whileHover={{ y: -10, scale: 1.02, boxShadow: "0 0 30px hsl(var(--accent) / 0.5)" }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <Card className="h-full bg-card/60 backdrop-blur-sm border-accent/20 overflow-hidden flex flex-col transition-all duration-300 hover:border-accent">
+                      <CardHeader className="p-0 border-b border-accent/20">
+                        <Image src={project.image} alt={project.title} data-ai-hint={project.aiHint} width={600} height={400} className="w-full h-48 object-cover" />
+                      </CardHeader>
+                      <CardContent className="p-6 flex-grow">
+                        <CardTitle className="text-white font-bold text-xl mb-2">{project.title}</CardTitle>
+                        <p className="text-white/70 text-sm">{project.description}</p>
+                      </CardContent>
+                      <CardFooter className="p-6 pt-0 flex flex-col items-start gap-4">
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map(tag => (
+                            <Badge key={tag} variant="secondary" className="bg-secondary/50 text-accent border border-accent/30">{tag}</Badge>
+                          ))}
+                        </div>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" className="w-full mt-auto">View Case Study</Button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-3xl bg-card/80 backdrop-blur-lg border-accent/30 text-white">
+                            <DialogHeader>
+                              <DialogTitle className="text-3xl text-accent text-glow">{project.title}</DialogTitle>
+                              <DialogDescription className="text-white/70 pt-2">
+                                Detailed case study for {project.title}.
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="grid md:grid-cols-2 gap-6 py-4">
+                              <div>
+                                <Image src={project.image} alt={project.title} data-ai-hint={project.aiHint} width={800} height={450} className="rounded-lg mb-4" />
+                                <div className="flex flex-wrap gap-2">
+                                  {project.tags.map(tag => (
+                                    <Badge key={tag} variant="secondary" className="bg-secondary/50 text-accent border border-accent/30">{tag}</Badge>
+                                  ))}
+                                </div>
+                              </div>
+                              <div className="space-y-4">
+                                <p className="text-white/90">{project.longDescription}</p>
+                                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                                  <Button className="box-glow">
+                                    <ExternalLink className="mr-2 h-4 w-4" /> View Live Site
+                                  </Button>
+                                </a>
+                              </div>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </CardFooter>
+                    </Card>
+                  </motion.div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="text-white bg-background/50 border-accent/20 hover:bg-accent disabled:opacity-50" />
+          <CarouselNext className="text-white bg-background/50 border-accent/20 hover:bg-accent disabled:opacity-50" />
+        </Carousel>
       </div>
     </section>
   );
