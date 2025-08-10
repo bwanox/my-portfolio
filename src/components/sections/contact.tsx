@@ -55,13 +55,13 @@ export default function ContactSection() {
                          <div className="space-y-4">
                              <a href="mailto:bilal.sahili@example.com" className="flex items-center gap-4 group">
                                 <Mail className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors"/>
-                                <span className="text-lg text-muted-foreground group-hover:text-primary transition-colors">bilal.sahili@example.com</span>
+                                <span className="text-lg text-muted-foreground group-hover:text-primary transition-colors">moad.bil7458@gmail.com</span>
                              </a>
-                             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+                             <a href="https://github.com/bwanox" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                                 <Github className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors"/>
                                 <span className="text-lg text-muted-foreground group-hover:text-primary transition-colors">GitHub Profile</span>
                              </a>
-                             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+                             <a href="https://www.linkedin.com/in/bilal-sahili-50821b2ba/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                                 <Linkedin className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors"/>
                                 <span className="text-lg text-muted-foreground group-hover:text-primary transition-colors">LinkedIn Profile</span>
                              </a>

@@ -1,10 +1,11 @@
 import type { LucideIcon } from 'lucide-react';
+import type { StaticImageData } from 'next/image';
 
 export interface Project {
   title: string;
   description: string;
   techStack: string;
-  image: string;
+  image: string | StaticImageData;
   liveUrl?: string;
   githubUrl?: string;
   aiHint: string;
