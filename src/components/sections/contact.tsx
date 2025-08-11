@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { Github, Linkedin, Mail, Send } from "lucide-react";
+import emailjs from "emailjs-com";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -29,19 +30,35 @@ export function Contact() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // In a real app, you would send this to a server endpoint
-    console.log("Transmission sent:", values);
-    toast({
-      title: "Transmission Sent!",
-      description: "Your message is traveling through the cosmos. I'll get back to you soon.",
-    });
-    form.reset();
+    try {
+      await emailjs.send(
+        "service_czyb0kf", 
+        "template_tehljjk", // replace with your EmailJS template ID
+        {
+          from_name: values.name,
+          from_email: values.email,
+          message: values.message,
+        },
+        "xL88zue1nD5v_le4I" 
+      );
+      toast({
+        title: "Transmission Sent!",
+        description: "Your message is traveling through the cosmos. I'll get back to you soon.",
+      });
+      form.reset();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+        variant: "destructive",
+      });
+    }
   }
 
   const socialIcons = [
-    { icon: <Github className="h-6 w-6"/>, href: "#" },
-    { icon: <Linkedin className="h-6 w-6"/>, href: "#" },
-    { icon: <Mail className="h-6 w-6"/>, href: "#" },
+    { icon: <Github className="h-6 w-6"/>, href: "https://github.com/bwanox" },
+    { icon: <Linkedin className="h-6 w-6"/>, href: "https://www.linkedin.com/in/bilal-sahili-50821b2ba/" },
+    { icon: <Mail className="h-6 w-6"/>, href: "mailto:moad.bil7458@gmail.com" },
   ];
 
   return (

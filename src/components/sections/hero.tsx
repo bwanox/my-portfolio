@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
@@ -24,45 +23,21 @@ export function Hero() {
     <section id="home" className="relative h-screen w-full flex items-center justify-center text-center overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-background z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-background z-10" />
         <motion.div
-          initial={{ scale: 1.2, opacity: 0 }}
+          initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 2, ease: "easeOut" }}
           className="absolute inset-0"
         >
-          <Image
-            src="https://placehold.co/1920x1080.png"
-            alt="Orbiting planet"
-            data-ai-hint="orbiting planet space"
-            fill
-            objectFit="cover"
-            className="opacity-30"
-            priority
-          />
-        </motion.div>
-      </div>
-      
-      {/* Drifting Asteroid */}
-      <motion.div 
-        className="absolute top-1/4 left-1/4 w-24 h-24 md:w-32 md:h-32"
-        animate={{
-          x: [0, 100, 0, -50, 0],
-          y: [0, 50, 150, 50, 0],
-          rotate: [0, 0, 180, 180, 0],
-          scale: [1, 1.2, 1, 0.8, 1],
-        }}
-        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-      >
-        <Image
-          src="https://placehold.co/128x128.png"
-          alt="Drifting asteroid"
-          data-ai-hint="asteroid space"
-          width={128}
-          height={128}
-          className="opacity-20"
+          style={{
+            backgroundImage: `url('/background.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
         />
-      </motion.div>
+      </div>
 
       {/* Main Content */}
       <div className="relative z-20 flex flex-col items-center px-4">
@@ -72,7 +47,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.2, type: "spring", stiffness: 100 }}
           className="font-headline text-5xl sm:text-7xl md:text-8xl font-bold text-white text-glow"
         >
-          COSMIC FOLIO
+          PORT FOLIO
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}

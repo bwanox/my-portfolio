@@ -18,7 +18,7 @@ export function About() {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-4 text-glow">
-            About This Lifeform
+            About Me
           </h2>
           <div className="w-24 h-1 bg-accent mx-auto mb-12 rounded-full"></div>
         </motion.div>
