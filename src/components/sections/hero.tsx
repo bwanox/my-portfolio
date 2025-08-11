@@ -29,7 +29,6 @@ export function Hero() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 2, ease: "easeOut" }}
           className="absolute inset-0"
-        >
           style={{
             backgroundImage: `url('/background.jpg')`,
             backgroundSize: 'cover',
