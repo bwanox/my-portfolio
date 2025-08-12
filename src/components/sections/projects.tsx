@@ -21,14 +21,15 @@ const projects = [
 		liveUrl: "https://unifriend.vercel.app",
 	},
 	{
-		title: "Nebula Navigator",
-		description: "An interactive 3D map of the known galaxy using Three.js.",
+		title: "Ensak",
+		description: "A modern, interactive school platform for clubs, grades, and assignments.",
 		longDescription:
-			"Nebula Navigator is a passion project to visualize stellar data in an interactive 3D environment. Using Three.js and GLSL shaders, it renders thousands of stars and celestial objects. The application fetches data from public astronomy APIs and provides a unique way to explore the cosmos.",
-		image: "https://placehold.co/600x400.png",
-		aiHint: "galaxy map",
-		tags: ["Three.js", "Next.js", "GLSL", "APIs"],
-		liveUrl: "#",
+			"Ensak is a comprehensive school web application designed to connect students, teachers, and clubs in one unified platform. Built with Next.js and Tailwind CSS, it offers features such as club showcases, assignment management, grade tracking with OCR extraction, and AI-powered career guidance. An integrated admin panel allows easy updates to news, highlights, members, and achievements, ensuring the platform stays dynamic and up to date.",
+		image: "/ensak.png",
+		aiHint: "school community platform",
+		tags: ["Next.js", "React", "Tailwind CSS", "Firebase", "Node.js", "Express"],
+		liveUrl: "https://ensakinfo.vercel.app",
+
 	},
 	{
 		title: "Cyber-Deck UI Kit",
