@@ -32,14 +32,15 @@ const projects = [
 
 	},
 	{
-		title: "Cyber-Deck UI Kit",
-		description: "A futuristic component library for sci-fi themed interfaces.",
+		title: "Evofriend",
+		description: "An empathetic AI chat companion designed to listen, support, and guide you through life’s ups and downs.",
 		longDescription:
-			"Designed for developers and designers, this UI kit provides a set of reusable React components with a distinct cyberpunk and sci-fi aesthetic. It's built with accessibility in mind and is highly customizable using Tailwind CSS. The design process was done in Figma, focusing on a consistent and immersive visual language.",
-		image: "https://placehold.co/600x400.png",
-		aiHint: "ui components",
-		tags: ["Figma", "React", "Tailwind", "Storybook"],
-		liveUrl: "#",
+			"Evofriend is a conversational AI built to be more than just a chatbot—it’s your personal listening partner and emotional support friend. Whether you need to talk through challenges, reflect on your day, or simply share your thoughts, Evofriend responds with empathy and understanding. Featuring customizable conversation styles, mood-based responses, and privacy-focused interactions, it’s designed to make you feel heard and supported. The AI learns your preferences over time to create more personalized and meaningful conversations.",
+		image: "/evofriend.png",
+		aiHint: "therapeutic companion AI",
+		tags: ["AI", "React", "Tailwind", "Chatbot", "Mental Health"],
+		liveUrl: "https://evofriend.vercel.app",
+
 	},
 	{
 		title: "AI Droid Companion",
